@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "chintu2" {
-  name     = "vinod45-rg"
+  name     = "vinod-rg"
   location = "centralindia"
 }
 
