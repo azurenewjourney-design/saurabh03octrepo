@@ -3,6 +3,11 @@ resource "azurerm_resource_group" "chintu2" {
   location = "centralindia"
 }
 
+resource "azurerm_resource_group" "new_rg" {
+  name     = "practice-new-rg"
+  location = "centralindia"
+}
+
 resource "azurerm_storage_account" "storage4578" {
   name                     = "riyan34765tunhgrr"
   resource_group_name      = "vinod-rg"
