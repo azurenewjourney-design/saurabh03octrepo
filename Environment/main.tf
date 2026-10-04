@@ -1,5 +1,10 @@
 resource "azurerm_resource_group" "chintu2" {
-  name     = "vinod45-rg"
+  name     = "vinod-rg"
+  location = "centralindia"
+}
+
+resource "azurerm_resource_group" "new_rg" {
+  name     = "practice-new-rg"
   location = "centralindia"
 }
 
@@ -10,4 +15,4 @@ resource "azurerm_storage_account" "storage4578" {
   account_tier             = "Standard"
   account_replication_type = "LRS"
 
-  }
+}
