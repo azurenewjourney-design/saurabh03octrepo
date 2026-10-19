@@ -10,9 +10,4 @@ resource "azurerm_resource_group" "new_rg" {
 
 
 
-backend "azurerm" {
-    resource_group_name           = "rg101"  
-    storage_account_name = "stterraformnalla21"                                 
-    container_name       = "tfstatenalla22"                                 
-    key                  = "prod1.terraform.tfstate"                   
-  }
+
