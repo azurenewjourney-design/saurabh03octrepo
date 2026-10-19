@@ -1,1 +1,96 @@
+trigger: none
+pool: saurabh-pool-19oct
+stages:
+  - stage: terraforminitandvalidation
+    displayName: terraform init and validation
+    jobs:
+      - job: terraforminitandvalidation
+        displayName: terraform init and validation
+        steps:
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/Environment'
+            backendServiceArm: 'Saurabh-serviceconn19oct'
+            backendAzureRmOverrideSubscriptionID: 'eacc5e4e-04a0-479c-b82a-f5b2d1b21f47'
+            backendAzureRmResourceGroupName: 'rg101'
+            backendAzureRmStorageAccountName: 'stterraformnalla21'
+            backendAzureRmContainerName: 'tfstatenalla22'
+            backendAzureRmKey: 'prod1.terraform.tfstate'
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'validate'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/Environment'
 
+  - stage: terraforminitandplan
+    displayName: terraform init and plan
+    dependsOn: terraforminitandvalidation
+    jobs:
+      - job: terraforminitandplan
+        displayName: terraform init and plan
+        steps:
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/Environment'
+            backendServiceArm: 'Saurabh-serviceconn19oct'
+            backendAzureRmOverrideSubscriptionID: 'eacc5e4e-04a0-479c-b82a-f5b2d1b21f47'
+            backendAzureRmResourceGroupName: 'rg101'
+            backendAzureRmStorageAccountName: 'stterraformnalla21'
+            backendAzureRmContainerName: 'tfstatenalla22'
+            backendAzureRmKey: 'prod1.terraform.tfstate'
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'plan'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/Environment'
+            environmentServiceNameAzureRM: 'Saurabh-serviceconn19oct'
+            environmentAzureRmOverrideSubscriptionID: 'eacc5e4e-04a0-479c-b82a-f5b2d1b21f47'
+
+  - stage: manualapproval
+    displayName: Manual Approval
+    dependsOn: terraforminitandplan
+    jobs:
+      - job: manualapproval
+        displayName: Manual Approval
+        pool: server
+        steps:
+        - task: ManualValidation@1
+          inputs:
+            notifyUsers: 'azurenewjourney@gmail.com'
+            approvers: 'azurenewjourney@gmail.com'
+            instructions: 'Please approve'
+
+  - stage: terraforminitandapply
+    displayName: terraform init and apply
+    dependsOn: manualapproval
+    jobs:
+      - job: terraforminitandapply
+        displayName: terraform init and apply
+        steps:
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/Environment'
+            backendServiceArm: 'Saurabh-serviceconn19oct'
+            backendAzureRmOverrideSubscriptionID: 'eacc5e4e-04a0-479c-b82a-f5b2d1b21f47'
+            backendAzureRmResourceGroupName: 'rg101'
+            backendAzureRmStorageAccountName: 'stterraformnalla21'
+            backendAzureRmContainerName: 'tfstatenalla22'
+            backendAzureRmKey: 'prod1.terraform.tfstate'
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'apply'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/Environment'
+            commandOptions: '-auto-approve'
+            environmentServiceNameAzureRM: 'Saurabh-serviceconn19oct'
+            environmentAzureRmOverrideSubscriptionID: 'eacc5e4e-04a0-479c-b82a-f5b2d1b21f47'
+        
+        
+        
+        
