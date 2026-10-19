@@ -8,11 +8,11 @@ resource "azurerm_resource_group" "new_rg" {
   location = "centralindia"
 }
 
-resource "azurerm_storage_account" "storage4578" {
-  name                     = "riyan34765tunhgrr"
-  resource_group_name      = "vinod-rg"
-  location                 = "centralindia"
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
 
-}
+
+backend "azurerm" {
+    resource_group_name           = "rg101"  
+    storage_account_name = "stterraformnalla21"                                 
+    container_name       = "tfstatenalla22"                                 
+    key                  = "prod1.terraform.tfstate"                   
+  }
