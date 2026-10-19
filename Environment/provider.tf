@@ -7,10 +7,10 @@ terraform {
   }
 
   backend "azurerm" {
-    resource_group_name  = "ramuji"
-    storage_account_name = "ramukigangaji786"
-    container_name       = "ramramji"
-    key                  = "terraform.tfstate"
+    resource_group_name           = "rg101"  
+    storage_account_name = "stterraformnalla21"                                 
+    container_name       = "tfstatenalla22"                                 
+    key                  = "prod1.terraform.tfstate"                   
     use_azuread_auth     = true
   }
 }
